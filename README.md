@@ -22,8 +22,7 @@ Built as a **final semester project**, demonstrating **C++ programming, Qt GUI d
 
 *(Optional: Add your screenshots here for visual appeal)*  
 
-![Main Window](screenshots/main_window.png)  
-![Add Student](screenshots/add_student.png)  
+![Main Window](screenshots/main_window.png)    
 
 > Tip: Create a `screenshots` folder in your project root and save images there.
 
