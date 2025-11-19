@@ -7,6 +7,12 @@ Built as a **final semester project**, demonstrating **C++ programming, Qt GUI d
 
 ---
 
+## 👤 Created By
+
+**Muhammad Farhan** – Roll Number: **K25SW01**  
+
+---
+
 ## ✨ Features
 
 - 📝 **Add Students** – Quickly add new student records  
@@ -20,9 +26,7 @@ Built as a **final semester project**, demonstrating **C++ programming, Qt GUI d
 
 ## 🖼️ Screenshots
 
-*(Optional: Add your screenshots here for visual appeal)*  
-
-![Main Window](screenshots/main_window.png)    
+![Main Window](screenshots/main_window.png)  
 
 > Tip: Create a `screenshots` folder in your project root and save images there.
 
