@@ -29,20 +29,3 @@ Built as a **final semester project**, demonstrating **C++ programming, Qt GUI d
 ![Main Window](screenshots/main_window.png)  
 
 > Tip: Create a `screenshots` folder in your project root and save images there.
-
----
-
-## 🚀 Installation
-
-### Prerequisites
-
-- **Qt 5.x or 6.x** (Qt Creator IDE recommended)  
-- **C++ compiler** (MSVC, MinGW, or GCC)  
-- **Git** (for cloning the repo)  
-
-### Steps
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/K25SW01/StudentManagementRecord-FinalProject.git
