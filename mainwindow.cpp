@@ -7,11 +7,6 @@
 /*
  * ===========================================
  *  STUDENT MANAGEMENT RECORD SYSTEM (CSV)
- *  Features:
- *   ✅ Add, Update, Delete, Navigate
- *   ✅ Save records in students.csv file
- *   ✅ Proper CSV format with header
- *   ✅ Works with Excel / Google Sheets
  * ===========================================
  */
 

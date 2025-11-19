@@ -8,12 +8,8 @@
 /*
  * ===============================
  *  STUDENT MANAGEMENT SYSTEM
- *  Developed by: Abdul Wasiu t
- *  Roll No: (K25SW-016)
- *  Description:
- *  This header file defines the
- *  structure and functions for
- *  managing student records.
+ *  Developed by: Muhammad Farhan
+ *  Roll No: (K25SW01)
  * ===============================
  */
 
