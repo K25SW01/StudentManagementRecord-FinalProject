@@ -13,6 +13,12 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(171, 175, 255);
+background-color: rgb(255, 255, 255);
+background-color: rgb(221, 234, 255);
+background-color: rgb(255, 255, 255);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -134,7 +140,7 @@
      <string>GPA</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEditName">
+   <widget class="QLineEdit" name="lineEditStudentName">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -154,7 +160,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEditFather">
+   <widget class="QLineEdit" name="lineEditFatherName">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -174,7 +180,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEditRoll">
+   <widget class="QLineEdit" name="lineEditRollNumber">
     <property name="geometry">
      <rect>
       <x>380</x>

@@ -32,11 +32,19 @@ MainWindow::MainWindow(QWidget *parent)
     if(file.open(QIODevice::ReadOnly)) {
         QTextStream in(&file);
         QString header = in.readLine(); // Skip header line
+
         while(!in.atEnd()) {
             QString line = in.readLine();
             QStringList fields = line.split(",");
             if(fields.size() == 6) {
-                Student s = {fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]};
+                Student s = {
+                    fields[0].trimmed(),
+                    fields[1].trimmed(),
+                    fields[2].trimmed(),
+                    fields[3].trimmed(),
+                    fields[4].trimmed(),
+                    fields[5].trimmed()
+                };
                 students.append(s);
             }
         }
@@ -53,9 +61,9 @@ MainWindow::~MainWindow()
 // Helper Function: Clear fields
 // ------------------------------
 void MainWindow::clearFields() {
-    ui->lineEditName->clear();
-    ui->lineEditRoll->clear();
-    ui->lineEditFather->clear();
+    ui->lineEditStudentName->clear();
+    ui->lineEditRollNumber->clear();
+    ui->lineEditFatherName->clear();
     ui->lineEditCaste->clear();
     ui->lineEditDistrict->clear();
     ui->lineEditGPA->clear();
@@ -65,15 +73,15 @@ void MainWindow::clearFields() {
 // Helper Function: Validate inputs
 // ------------------------------
 bool MainWindow::validateFields() {
-    if (ui->lineEditName->text().isEmpty()) {
+    if (ui->lineEditStudentName->text().isEmpty()) {
         QMessageBox::warning(this, "Missing Field", "Name field is required!");
         return false;
     }
-    if (ui->lineEditRoll->text().isEmpty()) {
+    if (ui->lineEditRollNumber->text().isEmpty()) {
         QMessageBox::warning(this, "Missing Field", "Roll Number is required!");
         return false;
     }
-    if (ui->lineEditFather->text().isEmpty()) {
+    if (ui->lineEditFatherName->text().isEmpty()) {
         QMessageBox::warning(this, "Missing Field", "Father's Name is required!");
         return false;
     }
@@ -100,10 +108,8 @@ void saveAllToCSV(const QVector<Student>& students) {
     if (file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         QTextStream out(&file);
 
-        // Header Line
-        out << "Name,Roll,Father,Caste,District,GPA\n";
+        out << "StudentName,RollNumber,FatherName,Caste,District,GPA\n";
 
-        // Write each record
         for (const Student &s : students) {
             out << s.name << "," << s.roll << "," << s.father << ","
                 << s.caste << "," << s.district << "," << s.gpa << "\n";
@@ -113,25 +119,44 @@ void saveAllToCSV(const QVector<Student>& students) {
 }
 
 // ------------------------------
+// Helper: Check duplicate roll number
+// ------------------------------
+bool MainWindow::rollExists(const QString &roll, int ignoreIndex) {
+    QString r = roll.trimmed();
+
+    for (int i = 0; i < students.size(); ++i) {
+        if (i == ignoreIndex) continue;
+        if (students[i].roll.trimmed() == r)
+            return true;
+    }
+    return false;
+}
+
+// ------------------------------
 // ADD BUTTON FUNCTION
 // ------------------------------
 void MainWindow::onAddClicked() {
     if (!validateFields()) return;
 
     Student s;
-    s.name = ui->lineEditName->text();
-    s.roll = ui->lineEditRoll->text();
-    s.father = ui->lineEditFather->text();
+    s.name = ui->lineEditStudentName->text();
+    s.roll = ui->lineEditRollNumber->text().trimmed();
+    s.father = ui->lineEditFatherName->text();
     s.caste = ui->lineEditCaste->text();
     s.district = ui->lineEditDistrict->text();
     s.gpa = ui->lineEditGPA->text();
 
+    // Duplicate Roll Check
+    if (rollExists(s.roll)) {
+        QMessageBox::warning(this, "Duplicate Roll", "A student with this Roll Number already exists!");
+        return;
+    }
+
     students.append(s);
 
-    // Save all records (including new) to CSV
     saveAllToCSV(students);
 
-    QMessageBox::information(this, "Success", "Student added successfully (saved to CSV)!");
+    QMessageBox::information(this, "Success", "Student added successfully!");
 
     clearFields();
     ui->pushButtonAdd->setEnabled(true);
@@ -151,9 +176,9 @@ void MainWindow::onNextClicked() {
     currentIndex = (currentIndex + 1) % students.size();
 
     Student s = students[currentIndex];
-    ui->lineEditName->setText(s.name);
-    ui->lineEditRoll->setText(s.roll);
-    ui->lineEditFather->setText(s.father);
+    ui->lineEditStudentName->setText(s.name);
+    ui->lineEditRollNumber->setText(s.roll);
+    ui->lineEditFatherName->setText(s.father);
     ui->lineEditCaste->setText(s.caste);
     ui->lineEditDistrict->setText(s.district);
     ui->lineEditGPA->setText(s.gpa);
@@ -170,17 +195,25 @@ void MainWindow::onUpdateClicked() {
     if (currentIndex < 0 || currentIndex >= students.size()) return;
     if (!validateFields()) return;
 
+    QString newRoll = ui->lineEditRollNumber->text().trimmed();
+
+    // Prevent updating to an existing roll number
+    if (rollExists(newRoll, currentIndex)) {
+        QMessageBox::warning(this, "Duplicate Roll", "Another student already has this Roll Number!");
+        return;
+    }
+
     Student &s = students[currentIndex];
-    s.name = ui->lineEditName->text();
-    s.roll = ui->lineEditRoll->text();
-    s.father = ui->lineEditFather->text();
+    s.name = ui->lineEditStudentName->text();
+    s.roll = newRoll;
+    s.father = ui->lineEditFatherName->text();
     s.caste = ui->lineEditCaste->text();
     s.district = ui->lineEditDistrict->text();
     s.gpa = ui->lineEditGPA->text();
 
     saveAllToCSV(students);
 
-    QMessageBox::information(this, "Updated", "Student record updated successfully (CSV updated)!");
+    QMessageBox::information(this, "Updated", "Student record updated successfully!");
 
     clearFields();
     ui->pushButtonAdd->setEnabled(true);
@@ -210,5 +243,5 @@ void MainWindow::onDeleteClicked() {
         onNextClicked();
     }
 
-    QMessageBox::information(this, "Deleted", "Student record deleted successfully from CSV!");
+    QMessageBox::information(this, "Deleted", "Student record deleted successfully!");
 }

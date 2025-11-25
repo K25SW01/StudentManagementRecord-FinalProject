@@ -25,9 +25,6 @@ struct Student {
     QString gpa;
 };
 
-// ------------------------------
-// MainWindow Class Declaration
-// ------------------------------
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -41,7 +38,6 @@ public:
     ~MainWindow();
 
 private slots:
-    // Slots for button actions
     void onAddClicked();     // Add new record
     void onNextClicked();    // Show next record
     void onUpdateClicked();  // Update existing record
@@ -54,8 +50,9 @@ private:
     int currentIndex;          // Current record index
 
     // Helper functions
-    void clearFields();        // Clears all text fields
-    bool validateFields();     // Ensures all fields are filled
+    void clearFields();
+    bool validateFields();
+    bool rollExists(const QString &roll, int ignoreIndex = -1);  // NEW FUNCTION
 };
 
 #endif // MAINWINDOW_H
